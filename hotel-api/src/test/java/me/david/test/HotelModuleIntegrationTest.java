@@ -81,10 +81,11 @@ public class HotelModuleIntegrationTest {
     protected String hotelServiceUrl;
 
     @Test
-    public void abc() {
+    public void checkServerURL() {
         System.out.println("hotelServiceUrl = " + hotelServiceUrl);
         assertThat(hotelServiceUrl).isEqualTo("http://localhost:8080");
     }
+
     @Test
     public void listHotels_shouldNotBeEmpty() {
         List<Hotel> listHotels = this.hotels.list();
