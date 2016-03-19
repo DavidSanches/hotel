@@ -4,10 +4,16 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
 import me.david.modules.hotel.config.HotelHttpFeignConfig;
+import me.david.modules.hotel.config.PersonHttpFeignConfig;
 import me.david.modules.hotel.domain.Hotel;
+import me.david.modules.hotel.domain.Person;
 import me.david.modules.hotel.feign.HotelDecoder;
 import me.david.modules.hotel.feign.HttpRemoteHotels;
+import me.david.modules.hotel.feign.HttpRemotePersons;
+import me.david.modules.hotel.feign.PersonDecoder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +36,8 @@ import static org.fest.assertions.Assertions.assertThat;
 @ContextConfiguration(classes = {
         HotelModuleIntegrationTest.BaseConfiguration.class,
         HotelModuleIntegrationTest.TestConfiguration.class,
-        HotelHttpFeignConfig.class
+        HotelHttpFeignConfig.class,
+        PersonHttpFeignConfig.class
 })
 public class HotelModuleIntegrationTest {
 
@@ -68,14 +75,19 @@ public class HotelModuleIntegrationTest {
         @Bean
         public Feign.Builder feignBuilder() {
             return Feign.builder()
-//                    .decoder(new JacksonDecoder(objectMapper))
+                    .encoder(new JacksonEncoder(objectMapper))
+                    .decoder(new JacksonDecoder(objectMapper))
                     .decoder(new HotelDecoder(objectMapper))
+                    .decoder(new PersonDecoder(objectMapper))
                     ;
         }
     }
 
     @Autowired
     protected HttpRemoteHotels hotels;
+
+    @Autowired
+    protected HttpRemotePersons persons;
 
     @Value("${hotelService.url}")
     protected String hotelServiceUrl;
@@ -105,5 +117,28 @@ public class HotelModuleIntegrationTest {
         Hotel theLangham = this.hotels.find("The Langham");
         System.out.println("theLangham = " + theLangham);
         assertThat(theLangham).isNotNull();
+    }
+
+
+    @Test
+    public void saveAndFindPerson() {
+        List<Person> everybody;
+//        List<Person> everybody = persons.list();
+//        assertThat(everybody).isEmpty();
+        
+        boolean davidAlive = true;
+        Person david = new Person("david", 18, "myphone", "my address",
+                davidAlive);
+        persons.save(david);
+
+        everybody = persons.list();
+        assertThat(everybody).hasSize(1);
+
+        Person found = persons.find("david");
+        assertThat(found).isNotNull();
+        assertThat(found.getAge()).isEqualTo(18);
+        assertThat(found.getId()).isNotNull();
+        System.out.println("found.getId() = " + found.getId());
+
     }
 }

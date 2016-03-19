@@ -59,7 +59,9 @@ public class DbConfig {
         entityManagerFactory.setDataSource(dataSource);
 
         // Classpath scanning of @Component, @Service, etc annotated class
-        entityManagerFactory.setPackagesToScan("me.david.modules.hotel.domain");
+        entityManagerFactory.setPackagesToScan(
+                "me.david.modules.hotel.domain",
+                "sample.data.rest.rana");
 
         // Vendor adapter
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
