@@ -1,5 +1,6 @@
 package me.david.modules.hotel.feign;
 
+import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import me.david.modules.hotel.domain.Hotel;
@@ -17,7 +18,8 @@ public interface HttpRemotePersons {
     List<Person> list();
 
     @RequestLine("POST /api/persons")
-    void save(Person p);
+    @Headers("Content-Type: application/json")
+    Person save(Person p);
 
 //    http://localhost:8080/api/hotels/search/findByName?name=Swissotel
 

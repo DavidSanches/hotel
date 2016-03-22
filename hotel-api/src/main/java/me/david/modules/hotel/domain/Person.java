@@ -1,5 +1,7 @@
 package me.david.modules.hotel.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import java.io.Serializable;
  * Created by rdas on 10/03/2016.
  */
 @Entity
+@JsonIgnoreProperties("_links")
 public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 

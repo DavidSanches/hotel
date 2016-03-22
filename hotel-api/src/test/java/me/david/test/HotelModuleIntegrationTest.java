@@ -122,19 +122,26 @@ public class HotelModuleIntegrationTest {
 
     @Test
     public void saveAndFindPerson() {
+        String testPersonName = "john";
+
         List<Person> everybody;
-//        List<Person> everybody = persons.list();
+        everybody = persons.list();
+        int nbPeople = everybody.size();
 //        assertThat(everybody).isEmpty();
         
         boolean davidAlive = true;
-        Person david = new Person("david", 18, "myphone", "my address",
+        Person david = new Person(testPersonName, 18, "myphone", "my address",
                 davidAlive);
-        persons.save(david);
+        Person saved = persons.save(david);
+        System.out.println("saved = " + saved);
+        assertThat(saved).isNotNull();
+        assertThat(saved.getName()).isEqualTo(testPersonName);
+        assertThat(saved.getAge()).isEqualTo(18);
 
         everybody = persons.list();
-        assertThat(everybody).hasSize(1);
+        assertThat(everybody).hasSize(nbPeople + 1);
 
-        Person found = persons.find("david");
+        Person found = persons.find(testPersonName);
         assertThat(found).isNotNull();
         assertThat(found.getAge()).isEqualTo(18);
         assertThat(found.getId()).isNotNull();
