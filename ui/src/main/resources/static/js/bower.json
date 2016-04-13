@@ -1,0 +1,21 @@
+{
+  "name": "polymer-demo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/DavidSanches/hotel",
+  "authors": [
+    "david <dsadub-tech@yahoo.fr>"
+  ],
+  "description": "test of polymer for microservices UI",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~1.4.0",
+    "vaadin-grid": "^1.0.0"
+  }
+}

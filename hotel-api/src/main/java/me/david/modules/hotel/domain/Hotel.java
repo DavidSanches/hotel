@@ -27,8 +27,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-public class
-Hotel implements Serializable {
+public class Hotel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

@@ -2,12 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <!-- Your own application should inherit from spring-boot-starter-parent -->
+    <!--<parent>
+        &lt;!&ndash; Your own application should inherit from spring-boot-starter-parent &ndash;&gt;
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-samples</artifactId>
         <version>1.4.0.BUILD-SNAPSHOT</version>
+    </parent>-->
+    <!--<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>${spring-boot.version}</version>
+        <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;
+    </parent>-->
+    <parent>
+        <groupId>me.david.modules</groupId>
+        <artifactId>hotel-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
+
     <artifactId>HotelApiService</artifactId>
     <name>HotelApiService, based on Spring Boot Data REST Sample</name>
     <description>Some HotelApiService</description>
@@ -15,17 +27,48 @@
     <organization>
         <name>David</name>
     </organization>
-    <properties>
-        <!--<main.basedir>${basedir}/../..</main.basedir>-->
 
+    <properties>
         <hotel.version>1.0.0-SNAPSHOT</hotel.version>
+        <spring-data-releasetrain.version>Gosling-SR4</spring-data-releasetrain.version>
     </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>me.david.modules</groupId>
             <artifactId>hotel-api</artifactId>
             <version>${hotel.version}</version>
         </dependency>
+
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring-boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>-->
+        <!--<dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-releasetrain</artifactId>
+            <version>Gosling-SR4</version>
+            <scope>import</scope>
+            <type>pom</type>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-rest-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-rest-core</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -37,6 +80,7 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
+            <version>${hsqldb.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -47,6 +91,22 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
+            <version>${json-path.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -55,11 +115,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
             </plugin>
         </plugins>
     </build>
 
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>spring-releases</id>
             <url>https://repo.spring.io/libs-release</url>
@@ -70,5 +131,5 @@
             <id>spring-releases</id>
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
-    </pluginRepositories>
+    </pluginRepositories>-->
 </project>

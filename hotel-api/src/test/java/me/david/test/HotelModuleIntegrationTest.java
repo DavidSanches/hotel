@@ -14,6 +14,7 @@ import me.david.modules.hotel.feign.HotelDecoder;
 import me.david.modules.hotel.feign.HttpRemoteHotels;
 import me.david.modules.hotel.feign.HttpRemotePersons;
 import me.david.modules.hotel.feign.PersonDecoder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ import static org.fest.assertions.Assertions.assertThat;
         HotelHttpFeignConfig.class,
         PersonHttpFeignConfig.class
 })
+@Ignore("need a server running @8080")
 public class HotelModuleIntegrationTest {
 
     @Configuration

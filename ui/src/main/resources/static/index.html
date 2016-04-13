@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="js/bower_components/webcomponentsjs/webcomponents.js"></script>
+    <!--<link rel="import" href="elements/greeting-display.html">-->
+    <link rel="import" href="elements/hello-world.html" />
+
+
+    <!--<link rel="import" href="js/bower_components/core-elements/core-elements.html">-->
+
+    <!--&lt;!&ndash; Custom Elements &ndash;&gt;-->
+    <!--<link rel="import" href="elements/app-elements.html">-->
+    <!--<link rel="import" href="elements/authentication.html">-->
+    <!--<link rel="import" href="elements/login-elements.html">-->
+
+    <link href="css/app.css" rel="stylesheet">
+</head>
+<body>
+hello world
+<!--<greeting-display></greeting-display>-->
+<hello-world name="Joe"></hello-world>
+
+<vaadin-grid id="simple">
+    <table>
+        <colgroup>
+            <col name="firstName">
+            <col name="lastName">
+            <col name="email">
+        </colgroup>
+    </table>
+</vaadin-grid>
+
+
+</body>
+<script>
+    (function() {
+  HTMLImports.whenReady(function() {
+    var grid = document.querySelector('#simple');
+
+    getJSON('https://demo.vaadin.com/demo-data/1.0/people', function(json) {
+      grid.items = json.result;
+    });
+  });
+
+  function getJSON(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        callback(JSON.parse(xhr.responseText));
+      }
+    };
+    xhr.open('GET', url, true);
+    xhr.send();
+  }
+})();
+</script>
+</html>

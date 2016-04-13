@@ -3,25 +3,19 @@ package me.david.modules.hotel.feign;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import feign.FeignException;
 import feign.Response;
 import feign.codec.DecodeException;
 import feign.codec.Decoder;
-import me.david.modules.hotel.domain.City;
-import me.david.modules.hotel.domain.Hotel;
 import me.david.modules.hotel.domain.Person;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Jackson Decoder for Person

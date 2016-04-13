@@ -14,7 +14,7 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "persons", path = "persons")
 interface PersonRepository extends PagingAndSortingRepository<Person, Long> {
 
-    @RestResource(path="byName")
-    public List findByPersonName(@Param("name") String personName);
+//    @RestResource(path="byName")
+//    public List findByPersonName(@Param("name") String personName);
 
 }
