@@ -2,9 +2,9 @@ package me.david.modules.hotel.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Feign;
-import feign.codec.Decoder;
-import me.david.modules.hotel.domain.Hotel;
+import me.david.modules.hotel.feign.CityDecoder;
 import me.david.modules.hotel.feign.HotelDecoder;
+import me.david.modules.hotel.feign.HttpRemoteCities;
 import me.david.modules.hotel.feign.HttpRemoteHotels;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Configuration for Feign for Hotel module
+ * Configuration for Feign for City module
  */
 @Configuration
-public class HotelHttpFeignConfig {
+public class CityHttpFeignConfig {
 
     @Value("${hotelService.url}")
     protected String hotelServiceUrl;
@@ -27,9 +27,9 @@ public class HotelHttpFeignConfig {
     protected ObjectMapper objectMapper;
 
     @Bean
-    public HttpRemoteHotels hotels() {
+    public HttpRemoteCities cities() {
         return feignBuilder
-                .decoder(new HotelDecoder(objectMapper))
-                .target(HttpRemoteHotels.class, hotelServiceUrl);
+                .decoder(new CityDecoder(objectMapper))
+                .target(HttpRemoteCities.class, hotelServiceUrl);
     }
 }

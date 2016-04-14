@@ -6,14 +6,13 @@ import com.google.common.collect.ImmutableList;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
+import me.david.modules.hotel.config.CityHttpFeignConfig;
 import me.david.modules.hotel.config.HotelHttpFeignConfig;
 import me.david.modules.hotel.config.PersonHttpFeignConfig;
+import me.david.modules.hotel.domain.City;
 import me.david.modules.hotel.domain.Hotel;
 import me.david.modules.hotel.domain.Person;
-import me.david.modules.hotel.feign.HotelDecoder;
-import me.david.modules.hotel.feign.HttpRemoteHotels;
-import me.david.modules.hotel.feign.HttpRemotePersons;
-import me.david.modules.hotel.feign.PersonDecoder;
+import me.david.modules.hotel.feign.*;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +37,7 @@ import static org.fest.assertions.Assertions.assertThat;
         HotelModuleIntegrationTest.BaseConfiguration.class,
         HotelModuleIntegrationTest.TestConfiguration.class,
         HotelHttpFeignConfig.class,
+        CityHttpFeignConfig.class,
         PersonHttpFeignConfig.class
 })
 @Ignore("need a server running @8080")
@@ -47,7 +47,6 @@ public class HotelModuleIntegrationTest {
     static class BaseConfiguration {
 
         protected List<Module> modules() {
-
             return new ImmutableList.Builder<Module>()
 //                    .add()
                     .build();
@@ -77,16 +76,20 @@ public class HotelModuleIntegrationTest {
         @Bean
         public Feign.Builder feignBuilder() {
             return Feign.builder()
+//                    .client(new OkHttpClient()) //TODO
                     .encoder(new JacksonEncoder(objectMapper))
                     .decoder(new JacksonDecoder(objectMapper))
-                    .decoder(new HotelDecoder(objectMapper))
-                    .decoder(new PersonDecoder(objectMapper))
+//                    .decoder(new HotelDecoder(objectMapper))
+//                    .decoder(new PersonDecoder(objectMapper))
                     ;
         }
     }
 
     @Autowired
     protected HttpRemoteHotels hotels;
+
+    @Autowired
+    protected HttpRemoteCities cities;
 
     @Autowired
     protected HttpRemotePersons persons;
@@ -108,6 +111,20 @@ public class HotelModuleIntegrationTest {
             System.out.println("hotel = " + hotel);
         }
         assertThat(listHotels).isNotEmpty();
+        System.out.println("listHotels.get(0) = " + listHotels.get(0));
+        assertThat(listHotels.get(0)).isNotNull();
+    }
+
+    @Test
+    public void listCitiess_shouldNotBeEmpty() {
+        List<City> listCities = this.cities.list();
+        System.out.println("listCities = " + listCities);
+        for (City city : listCities) {
+            System.out.println("city = " + city);
+        }
+        assertThat(listCities).isNotEmpty();
+        System.out.println("listCities.get(0) = " + listCities.get(0));
+        assertThat(listCities.get(0)).isNotNull();
     }
 
     @Test
@@ -130,7 +147,7 @@ public class HotelModuleIntegrationTest {
         everybody = persons.list();
         int nbPeople = everybody.size();
 //        assertThat(everybody).isEmpty();
-        
+
         boolean davidAlive = true;
         Person david = new Person(testPersonName, 18, "myphone", "my address",
                 davidAlive);

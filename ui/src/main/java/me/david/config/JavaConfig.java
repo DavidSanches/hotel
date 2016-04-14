@@ -8,11 +8,15 @@ import com.google.common.collect.ImmutableList;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
+import me.david.modules.hotel.config.CityHttpFeignConfig;
+import me.david.modules.hotel.config.HotelHttpFeignConfig;
+import me.david.modules.hotel.config.PersonHttpFeignConfig;
 import me.david.modules.hotel.domain.Hotel;
 import me.david.modules.hotel.feign.HotelDecoder;
 import me.david.modules.hotel.feign.PersonDecoder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
@@ -20,6 +24,11 @@ import java.util.List;
  * Created by david on 13/04/2016.
  */
 @Configuration
+@ContextConfiguration(classes = {
+        HotelHttpFeignConfig.class,
+        CityHttpFeignConfig.class,
+        PersonHttpFeignConfig.class
+})
 public class JavaConfig {
 
     class HotelModule extends SimpleModule {
@@ -50,8 +59,8 @@ public class JavaConfig {
         return Feign.builder()
                 .encoder(new JacksonEncoder(objectMapper))
                 .decoder(new JacksonDecoder(objectMapper))
-                .decoder(new HotelDecoder(objectMapper))
-                .decoder(new PersonDecoder(objectMapper))
+//                .decoder(new HotelDecoder(objectMapper))
+//                .decoder(new PersonDecoder(objectMapper))
                 ;
     }
 }
